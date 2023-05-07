@@ -99,6 +99,16 @@ int main(void)
 #define MAX_INPUT_LENGTH 20
 
 void processInput(char *input) {
+    
+    #define CMD_ERROR_PRINT_INDEX                 0
+    #define CMD_ERROR_SET_INDEX                   1	
+	
+	const char* help_info[] =
+    {
+        [CMD_ERROR_PRINT_INDEX]   = "print                         - all of the error id  print",
+        [CMD_ERROR_SET_INDEX]     = "<insert|delete> <1-255>       - error  set",
+    };
+	
     char *token;
 
     token = strtok(input, " ");
@@ -116,6 +126,15 @@ void processInput(char *input) {
     {
         uint16_t id = strtol(strtok(NULL, " "), NULL, 0);
         error_delete((error_id_t)id);
+    }
+    else
+    {
+        printf("Usage:\n");
+        for (int i = 0; i < sizeof(help_info) / sizeof(char*); i++)
+        {
+            printf("%s\n", help_info[i]);
+        }
+        printf("\n");
     }
     
 }
